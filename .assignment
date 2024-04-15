@@ -1,0 +1,3 @@
+1. Implement create, update, delete, getAll, getById routes for all the tables in your schema(draw.io)
+2. implement sequelize findAndCountAll https://sequelize.org/docs/v6/core-concepts/model-querying-finders/
+3. Play around with this page https://sequelize.org/docs/v6/core-concepts/model-querying-basics/

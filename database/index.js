@@ -61,9 +61,9 @@ const Recipe = sequelize.define(
 			type: DataTypes.FLOAT,
 			allowNull: false,
 		},
-		author_name: {
-			type: DataTypes.STRING,
-			allowNull: false,
+		status: {
+			type: DataTypes.ENUM('draft', 'published', 'archived'),
+			defaultValue: 'draft',
 		},
 	},
 	{
@@ -73,7 +73,7 @@ const Recipe = sequelize.define(
 User.hasMany(Recipe)
 Recipe.belongsTo(User)
 sequelize.sync({ alter: true })
-const create_user = async () => {
+const create_user = async (req, res, next) => {
 	const user = await User.create({
 		password: 'P@55w0rd',
 		name: 'Anthony3',
@@ -83,7 +83,7 @@ const create_user = async () => {
 		phone: '1234567890',
 		valid_license: true,
 	})
-	console.log(user)
+	next()
 }
 const update_user = async (id) => {
 	const user = await User.update(
@@ -136,3 +136,13 @@ const get_one_user = async (email) => {
 //.findByPk
 //.findOne
 //.restore
+
+const check_authorization = async (req, res, next) => {
+	const logged_in = true
+	if (logged_in) {
+		next()
+	} else {
+		res.send('You are not authorized')
+	}
+}
+module.exports = { User, Recipe, create_user, check_authorization }

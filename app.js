@@ -4,8 +4,7 @@ var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 const database = require('./database')
 
-var indexRouter = require('./routes')
-var usersRouter = require('./routes/users')
+var routers = require('./routes')
 
 var app = express() //http://localhost:3000/
 
@@ -15,7 +14,6 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', indexRouter)
-app.use('/users', usersRouter)
+app.use('/', routers)
 
 module.exports = app
