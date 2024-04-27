@@ -3,24 +3,20 @@ const { User } = require('../database')
 var router = express.Router()
 
 //Create a new user
-router.post('/', async function (req, res, next) {
+router.post('/', async function (req, res) {
 	const {
-		name,
+		firstname,
+		lastname,
 		email,
 		password,
-		username,
-		password_hint,
 		phone,
-		valid_license,
 	} = req.body
 	const result = await User.create({
-		name: name,
-		email: email,
-		password: password,
-		username: username,
-		password_hint: password_hint,
-		phone: phone,
-		valid_license: valid_license,
+		firstname,
+		lastname,
+		email,
+		password,
+		phone
 	})
 	res.send(result)
 })
@@ -29,23 +25,19 @@ router.post('/', async function (req, res, next) {
 router.put('/:id', async function (req, res) {
 	const id = req.params.id
 	const {
-		name,
+		firstname,
+		lastname,
 		email,
 		password,
-		username,
-		password_hint,
 		phone,
-		valid_license,
 	} = req.body
 	const result = await User.update(
 		{
-			name,
+			firstname,
+			lastname,
 			email,
 			password,
-			username,
-			password_hint,
-			phone,
-			valid_license,
+			phone
 		},
 		{ where: { id: id } }
 	)
@@ -69,10 +61,7 @@ router.delete('/:id', async function (req, res) {
 
 //Get all users
 router.get('/', async function (req, res) {
-	const limit = 5
-	const offset = 2 * limit
-	//where
-	const result = await User.findAndCountAll({ limit: 5, offset })
+	const result = await User.findAndCountAll()
 	res.send(result)
 })
 

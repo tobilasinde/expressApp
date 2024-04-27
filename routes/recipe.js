@@ -4,12 +4,16 @@ var router = express.Router()
 
 //Create a new recipe
 router.post('/', check_authorization, async function (req, res, next) {
-	const { name, description, cook_time, prep_time } = req.body
+	const { name, description, cook_time, prep_time, yield, category, directions, ingredients } = req.body
 	const result = await Recipe.create({
-		name: name,
-		description: description,
-		cook_time: cook_time,
-		prep_time: prep_time,
+		name,
+		description,
+		cook_time,
+		prep_time,
+		yield,
+		category,
+		directions,
+		ingredients
 	})
 	res.send(result)
 })
@@ -17,14 +21,18 @@ router.post('/', check_authorization, async function (req, res, next) {
 //Update a recipe
 router.put('/:id', async function (req, res, next) {
 	const id = req.params.id
-	const { name, description, cook_time, prep_time, status } = req.body
+	const { name, description, cook_time, prep_time, yield, category, directions, ingredients, status} = req.body
 	const result = await Recipe.update(
 		{
-			name: name,
-			description: description,
-			cook_time: cook_time,
-			prep_time: prep_time,
-			status: status,
+			name,
+			description,
+			cook_time,
+			prep_time,
+			yield,
+			category,
+			directions,
+			ingredients,
+			status,
 		},
 		{ where: { id: id } }
 	)
